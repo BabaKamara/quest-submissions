@@ -31,6 +31,12 @@ This is the hardest quest so far, so if it takes you some time, do not worry! I 
 Add two new things inside your contract:
 
 A variable named myNumber that has type Int (set it to 0 when the contract is deployed)
+(need some help to start : how to do it ? I tried this :   
+pub var: Int
+  init() {
+  Int = 0
+  let myNumber = 0
+
 
 A function named updateMyNumber that takes in a new number named newNumber as a parameter that has type Int and updates myNumber to be newNumber
 
