@@ -31,15 +31,48 @@ This is the hardest quest so far, so if it takes you some time, do not worry! I 
 Add two new things inside your contract:
 
 A variable named myNumber that has type Int (set it to 0 when the contract is deployed)
-(need some help to start : how to do it ? I tried this :   
-pub var: Int
-  init() {
-  Int = 0
-  let myNumber = 0
+pub contract HelloWorld {
+
+    pub var greeting: String
+    pub var myNumber: Int
+
+    init() {
+        self.greeting = "Hello, World!"
+        self.myNumber = 0
+    }
+pub fun changeGreeting(newGreeting: String) {
+    self.greeting = newGreeting
+}
+
+}
 
 
 A function named updateMyNumber that takes in a new number named newNumber as a parameter that has type Int and updates myNumber to be newNumber
 
+pub fun updatemyName(newNumber: Int)  
+{
+    self.myNumber = newNumber
+}
+
 Add a script that reads myNumber from the contract
 
+import HelloWorld from 0x01
+
+pub fun main(): Int {
+    return HelloWorld.myNumber
+}    
+
 Add a transaction that takes in a parameter named myNewNumber and passes it into the updateMyNumber function. Verify that your number changed by running the script again.
+
+import HelloWorld from 0x01
+
+transaction(myNewNumber: Int) {
+
+  prepare(signer: AuthAccount) {}
+
+  execute {
+    HelloWorld.updatemyName(newNumber:myNewNumber)
+  }
+}
+
+
