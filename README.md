@@ -103,6 +103,7 @@ pub resource Jacob {
 
 }
 
+It is string resource type
 
 
 6- Let's play the "I Spy" game from when we were kids. I Spy 4 things wrong with this code. Please fix them.
@@ -134,9 +135,9 @@ pub contract Test {
         }
     }
 
-    pub fun createJacob(): @Jacob { // there is 1 here
-        let myJacob <- create Jacob () // there are 2 here
-        return <- myJacob // there is 1 here
+    pub fun createJacob(): @Jacob {
+        let myJacob <- create Jacob ()
+        return <- myJacob
     }
 }
 
