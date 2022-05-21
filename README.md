@@ -103,6 +103,8 @@ pub resource Jacob {
 
 }
 
+
+
 6- Let's play the "I Spy" game from when we were kids. I Spy 4 things wrong with this code. Please fix them.
 
 pub contract Test {
@@ -121,6 +123,22 @@ pub contract Test {
     }
 }
 
+
+pub contract Test {
+
+    // Hint: There's nothing wrong here ;)
+    pub resource Jacob {
+        pub let rocks: Bool
+        init() {
+            self.rocks = true
+        }
+    }
+
+    pub fun createJacob(): @Jacob { // there is 1 here
+        let myJacob <- create Jacob () // there are 2 here
+        return <- myJacob // there is 1 here
+    }
+}
 
 Workshop 4/8 Chapter 3 Day 2 - Resources / References
 
