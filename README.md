@@ -129,7 +129,6 @@ pub contract Test {
 
 pub contract Test {
 
-    // Hint: There's nothing wrong here ;)
     pub resource Jacob {
         pub let rocks: Bool
         init() {
