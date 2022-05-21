@@ -77,6 +77,8 @@ transaction(myNewNumber: Int) {
 
 
 
+CHAPTER 3
+
 Workshop 3/8 Chapter 3 Day 1 - Resources
 
 Quests
