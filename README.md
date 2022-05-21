@@ -84,13 +84,19 @@ Quests
 As always, feel free to answer in the language of your choice.
 
 1- In words, list 3 reasons why structs are different from resources.
+    . Structs can be copied, which is impossible for resources.
+    . Structs could be lost or overwritten what is impossible for resources.
+    . Resources can not be created whenever I want unlike Structs that could be.
 
 2- Describe a situation where a resource might be better to use than a struct.
+    I have to be extremely explicit about how I handle a resource (for example when I move them), what make resources extremely secure.
 
 3- What is the keyword to make a new resource?
+    create
 
 4- Can a resource be created in a script or transaction (assuming there isn't a public function to create one)?
-
+    NO! resource can only be created inside a contract.
+    
 5- What is the type of the resource below?
 
 pub resource Jacob {
@@ -114,6 +120,16 @@ pub contract Test {
         return myJacob // there is 1 here
     }
 }
+
+
+Workshop 4/8 Chapter 3 Day 2 - Resources / References
+
+Quests
+
+
+
+
+
 
 
 
