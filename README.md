@@ -145,7 +145,38 @@ pub contract Test {
 Workshop 4/8 Chapter 3 Day 2 - Resources / References
 
 Quests
+1. Write your own smart contract that contains two state variables: an array of resources, and a dictionary of resources. Add functions to remove and add to each of them. They must be different from the examples above.
 
+pub contract KamaraTest {
+
+    pub var arrayOfNFTs: @[NFT]
+    pub var dictionaryOfNFTs: @{String: NFT}
+
+    pub resource NFT {
+        pub let message: String
+        init() {
+            self.message = "Hello, Welcome in your Gallery!"
+        }
+    }
+
+    pub fun addNFT(NFT: @NFT) {
+        let key = NFT.message
+        let oldNFT <- self.dictionaryOfNFTs[key] <- NFT
+        destroy oldNFT
+    }
+
+    
+    pub fun removeNFT(key: String): @NFT {
+        let NFT <- self.dictionaryOfNFTs.remove(key: key) ?? panic("Could not find the NFT!")
+        return <- NFT
+    }
+
+        init() {
+        self.arrayOfNFTs <- []
+        self.dictionaryOfNFTs <- {}
+    }
+
+}
 
 
 
