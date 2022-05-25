@@ -184,9 +184,55 @@ Quests
 
 1. Define your own contract that stores a dictionary of resources. Add a function to get a reference to one of the resources in the dictionary.
 
+pub contract KamaraTest {
+
+    pub var dictionaryOfNFTs: @{String: NFT}
+
+    pub resource NFT {
+        pub let language: String
+        init(_language: String) {
+            self.language = _language
+        }
+    }
+
+    pub fun getReference(key: String): &NFT {
+        return &self.dictionaryOfNFTs[key] as &NFT
+    }
+
+    init() {
+        self.dictionaryOfNFTs <- {
+            "Hello!": <- create NFT(_language: "English"), 
+            "Bonjour!": <- create NFT(_language: "French"),
+            "Guten Tag!": <- create NFT(_language: "German")
+        }
+    }
+}
+
+
 2. Create a script that reads information from that resource using the reference from the function you defined in part 1.
 
+SCRIPT TEMPLATE
+
+import KamaraTest from 0x02
+
+pub fun main(): String {
+  let ref = KamaraTest.getReference(key: "Hello!")
+  return ref.language // returns "English"
+}
+
+TRANSACTION
+
+import KamaraTest from 0x02
+
+pub fun main(): String {
+  let ref = KamaraTest.getReference(key: "Hello!")
+  return ref.language // returns "English"
+}
+
+
 3. Explain, in your own words, why references can be useful in Cadence.
+I would say references as specific Library in Cadence.
+
 
 
 
