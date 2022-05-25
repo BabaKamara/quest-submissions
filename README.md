@@ -238,8 +238,54 @@ Workshop # 4/8 Chapter 3 Day 4 - Resource/Struct Interfaces
 
 Quests
 1. Explain, in your own words, the 2 things resource interfaces can be used for (we went over both in today's content)
+   Resource Interface can be used to customize access content for designated users.
+   Resource interface enables to set curated content (or data) in my own manner
+   
 
 2. Define your own contract. Make your own resource interface and a resource that implements the interface. Create 2 functions. In the 1st function, show an example of not restricting the type of the resource and accessing its content. In the 2nd function, show an example of restricting the type of the resource and NOT being able to access its content.
+
+pub contract KamaraTest {
+
+    pub resource interface INFT {
+      pub var name: String
+      pub var number: Int
+      pub fun updateNumber(newNumber: Int): Int
+    }
+
+    pub resource NFT: INFT {
+      pub var name: String
+      pub var number: Int
+
+      pub fun updateNumber(newNumber: Int): Int {
+        self.number = newNumber
+        return self.number // returns the new number
+      }
+
+      init() {
+        self.name = "Kamarasega"
+        self.number = 11
+      }
+    }
+
+    pub fun noInterface() {
+      let nft: @NFT <- create NFT ()
+      nft.updateNumber(newNumber: 55)
+      log(nft.number) // 55
+
+      destroy nft
+    }
+
+    // Works totally fine now! :D
+    pub fun yesInterface() {
+      let nft: @NFT{INFT} <- create NFT ()
+      let newNumber = nft.updateNumber(newNumber: 55)
+      log(newNumber) // 55
+
+      destroy nft
+    }
+}
+
+
 
 3. How would we fix this code?
 
