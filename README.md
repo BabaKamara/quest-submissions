@@ -296,12 +296,9 @@ pub contract Stuff {
       pub var favouriteFruit: String
     }
 
-    // ERROR:
-    // `structure Stuff.Test does not conform 
-    // to structure interface Stuff.ITest`
-    pub struct Test: ITest {
+    pub struct interface Test: ITest {
       pub var greeting: String
-
+      }
       pub fun changeGreeting(newGreeting: String): String {
         self.greeting = newGreeting
         return self.greeting // returns the new greeting
