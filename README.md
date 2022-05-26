@@ -307,14 +307,13 @@ pub contract Stuff {
       init() {
         self.greeting = "Hello!"
       }
-    }
 
     pub fun fixThis() {
       let test: Test{ITest} = Test()
       let newGreeting = test.changeGreeting(newGreeting: "Bonjour!") // ERROR HERE: `member of restricted type is not accessible: changeGreeting`
       log(newGreeting)
     }
-}
+    } // unexpected conformances
 
 
 
