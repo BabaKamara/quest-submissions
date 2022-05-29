@@ -3,14 +3,97 @@ QUESTS
 
 Please answer in the language of your choice.
 
-1. What does .link() do?
+1. WHAT DOES LINK() DO?
 
-2. In your own words (no code), explain how we can use resource interfaces to only expose certain things to the /public/ path.
+    .link() is a function that enables me (allows me a capability) to expose my resource from my /storage/ account to the public.
 
-3. Deploy a contract that contains a resource that implements a resource interface. Then, do the following:
+2. IN YOUR OWN WORDS (NO CODE), EXPLAIN HOW WE CAN USE RESOURCE INTERFACES TO ONLY EXPOSE CERTAIN THINGS TO THE /PUBLIC/ PATH.
 
-    i. In a transaction, save the resource to storage and link it to the public with the restrictive interface.
+    By defining a new resource that only exposes the name field rather than the changeName, and using .link() function to expose my resource to the /public/ path.
 
-    ii. Run a script that tries to access a non-exposed field in the resource interface, and see the error pop up.
+3. DEPLOY A CONTRACT THAT CONTAINS A RESOURCE THAT IMPLEMENTS A RESOURCE INTERFACE. THEN, DO THE FOLLOWING:
 
-    iii. Run the script and access something you CAN read from. Return it from the script.
+    i. IN A TRANSACTION, SAVE THE RESOURCE TO STORAGE AND LINK IT TO THE PUBLIC WITH THE RESTRICTIVE INTERFACE.
+    
+    pub contract Bingo {
+
+  pub resource Test {
+    pub var name: String
+
+    pub fun changeName(newName: String) {
+      self.name = newName
+    }
+
+    init() {
+      self.name = "Baba"
+    }
+  }
+
+  pub fun createTest(): @Test {
+    return <- create Test()
+  }
+
+}
+
+    ii. RUN A SCRIPT THAT TRIES TO ACCESS A NON-EXPOSED FIELD IN THE RESOURCE INTERFACE, AND SEE THE ERROR POP UP.
+    
+        import Bingo from 0x01
+transaction(address: Address) {
+
+  prepare(signer: AuthAccount) {
+
+  }
+
+  execute {
+    let publicCapability: Capability<&Bingo.Test> =
+      getAccount(address).getCapability<&Bingo.Test>(/public/MyTestResource)
+
+    let testResource: &Bingo.Test = publicCapability.borrow() ?? panic("The capability doesn't exist or you did not specify the right type when you got the capability.")
+
+    testResource.changeName(newName: "Sarah") // THIS IS A SECURITY PROBLEM!!!!!!!!!
+  }
+}
+
+    iii. RUN THE SCRIPT AND ACCESS SOMETHING YOU CAN READ FROM. RETURN IT FROM THE SCRIPT.
+    
+    pub contract Bingo {
+
+  pub resource interface ITest {
+    pub var name: String
+  }
+
+  // `Test` now implements `ITest`
+  pub resource Test: ITest {
+    pub var name: String
+
+    pub fun changeName(newName: String) {
+      self.name = newName
+    }
+
+    init() {
+      self.name = "Baba"
+    }
+  }
+
+  pub fun createTest(): @Test {
+    return <- create Test()
+  }
+
+}
+
+The script follows like so :
+
+import Bingo from 0x01
+pub fun main(address: Address): String {
+  let publicCapability: Capability<&Bingo.Test{Bingo.ITest}> =
+    getAccount(address).getCapability<&Bingo.Test{Bingo.ITest}>(/public/MyTestResource)
+
+  let testResource: &Bingo.Test{Bingo.ITest} = publicCapability.borrow() ?? panic("The capability doesn't exist or you did not specify the right type when you got the capability.")
+
+  // This works because `name` is in `&Bingo.Test{Bingo.ITest}`
+  return testResource.name
+}
+
+
+
+    
